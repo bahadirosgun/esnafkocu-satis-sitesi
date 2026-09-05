@@ -82,7 +82,14 @@ strong{font-weight:600;color:#fff}
   font:700 13.5px/1.4 var(--mono);letter-spacing:.04em}
 
 /* ============ HERO ============ */
-.hero{padding:84px 0 var(--pad);position:relative;overflow:hidden;border-top:0}
+.hero{padding:72px 0 var(--pad);position:relative;overflow:hidden;border-top:0}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:52px;align-items:center}
+.hero-text .label{margin-bottom:16px}
+.hero-text h1{margin-bottom:20px}
+.hero-text .lede{color:#fff;font-weight:500}
+.hero-text .sub{margin-top:16px;color:var(--dim);font-size:17px}
+.hero-cta{text-align:center;margin-top:52px;padding-top:44px;border-top:1px solid var(--line)}
+.hero-cta .note{margin-top:18px}
 .hero:before{content:"";position:absolute;left:50%;top:-420px;transform:translateX(-50%);
   width:1200px;height:820px;border-radius:50%;pointer-events:none;
   background:radial-gradient(ellipse,rgba(255,214,66,.12),rgba(255,214,66,0) 66%)}
@@ -91,13 +98,15 @@ strong{font-weight:600;color:#fff}
 
 /* ============ VİDEO ============ */
 .vsl{margin:0}
+.vsl-play{aspect-ratio:16/9}
+.vsl-play img{height:100%;object-fit:cover}
 .vsl-play{display:block;width:100%;position:relative;padding:0;border:1px solid var(--line-2);
   background:#0d1424;border-radius:18px;overflow:hidden;cursor:pointer;
   box-shadow:0 26px 60px rgba(0,0,0,.55);transition:transform .18s,box-shadow .18s}
 .vsl-play:hover{transform:translateY(-3px);box-shadow:0 32px 72px rgba(0,0,0,.6)}
 .vsl-play img{width:100%}
 .vsl-play .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:86px;height:86px;border-radius:50%;background:var(--gold);color:#20180a;
+  width:78px;height:78px;border-radius:50%;background:var(--gold);color:#20180a;
   display:flex;align-items:center;justify-content:center;padding-left:5px;
   box-shadow:0 12px 34px rgba(255,214,66,.3);transition:transform .18s}
 .vsl-play:hover .play{transform:translate(-50%,-50%) scale(1.06)}
@@ -283,6 +292,10 @@ footer a{color:var(--gold-2)}
   .phone{max-width:240px;margin-inline:auto}
   .stack{padding:24px 20px}
   .pricebox{padding:34px 22px}
+  .hero-grid{grid-template-columns:1fr;gap:30px}
+  .hero-grid .vsl{order:2}
+  .hero-grid .hero-text{order:1}
+  .hero-cta{margin-top:34px;padding-top:30px}
   .vsl-play .play{width:60px;height:60px}
   .vsl-play .play svg{width:24px;height:24px}
   .vsl-hint{bottom:12px;font-size:10px;padding:7px 12px}
@@ -296,24 +309,26 @@ footer a{color:var(--gold-2)}
 
 <!-- ============ HERO ============ -->
 <header class="hero">
-  <div class="wrap stack-gap">
-    <div class="mid">
-      <span class="label">Yerel işletmelere web sitesi satanlar için</span>
-      <h1>Siteyi <em>önce</em> yap.<br>Teklifi <em>sonra</em> ver.</h1>
-      <p class="lede" style="margin-top:22px">Sitesi olmayan yerel işletmeyi bul, kendi bilgisiyle beş sayfalık sitesini üret, öyle teklif ver. Nasıl çalıştığını videoda anlatıyorum.</p>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="vsl" id="vsl">
+        <button class="vsl-play" type="button" aria-label="Tanıtım videosunu oynat">
+          <img src="img/vsl-poster.jpg" alt="EsnafKoçu tanıtım videosu" width="1600" height="900" fetchpriority="high">
+          <span class="play"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+        </button>
+      </div>
+
+      <div class="hero-text">
+        <span class="label">Yerel işletmelere web sitesi satanlar için</span>
+        <h1>Siteyi <em>önce</em> yap.<br>Teklifi <em>sonra</em> ver.</h1>
+        <p class="lede">Sitesi olmayan yerel işletmeyi bul, kendi bilgisiyle beş sayfalık sitesini üret, öyle teklif ver.</p>
+        <p class="sub">EsnafKoçu kendi bilgisayarında çalışıyor. Google Haritalar'ı tarıyor, sitesi olmayan firmaları listeliyor ve seçtiğine tek tuşla demo site üretiyor. Nasıl çalıştığını yandaki videoda anlatıyorum.</p>
+      </div>
     </div>
 
-    <div class="vsl" id="vsl">
-      <button class="vsl-play" type="button" aria-label="Tanıtım videosunu oynat">
-        <img src="img/vsl-poster.jpg" alt="EsnafKoçu tanıtım videosu" width="1600" height="900" fetchpriority="high">
-        <span class="play"><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
-        <span class="vsl-hint">Videoyu izle · 3 dk</span>
-      </button>
-    </div>
-
-    <div class="mid">
+    <div class="hero-cta">
       <a class="btn big" href="#satinal">1.000 TL — hemen satın al</a>
-      <p class="note" style="margin-top:18px">Tek seferlik ödeme · Sınırsız kullanım · Kaynak kodu açık · 30 gün destek</p>
+      <p class="note">Tek seferlik ödeme · Sınırsız kullanım · Kaynak kodu açık · 30 gün destek</p>
     </div>
   </div>
 </header>
