@@ -239,6 +239,12 @@ figure{margin:0}
 .old{font:500 18px/1 var(--mono);color:var(--faint);text-decoration:line-through}
 .now{font:700 clamp(48px,7vw,68px)/1 var(--serif);color:var(--gold);margin:10px 0 12px}
 
+.refund{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);
+  font:500 13px/1.9 var(--mono);color:var(--faint)}
+.refund b{color:var(--gold)}
+.refund a{color:var(--gold-2);text-decoration:none;white-space:nowrap}
+.refund a:hover{text-decoration:underline}
+
 /* ============ SSS ============ */
 details{border-bottom:1px solid var(--line);padding:20px 0}
 details:first-of-type{padding-top:0}
@@ -260,6 +266,10 @@ details p{margin-top:14px;color:var(--dim);font-size:16.5px;max-width:var(--meas
 footer{padding:44px 0 34px;font:500 13.5px/1.9 var(--mono);color:var(--faint);
   text-align:center;border-top:1px solid var(--line)}
 footer a{color:var(--gold-2)}
+.legal-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;
+  margin-bottom:26px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.legal-nav a{text-decoration:none;white-space:nowrap}
+.legal-nav a:hover{text-decoration:underline}
 
 
 /* ============ RÜTBE ROZETİ ============ */
@@ -699,6 +709,9 @@ footer a{color:var(--gold-2)}
       <p class="body" style="margin-bottom:26px">Tek seferlik ödeme. 5 adet tükendiğinde satış kendiliğinden kapanıyor ve fiyat 2.000 TL'ye çıkıyor.</p>
       <a class="btn big" href="https://www.shopier.com/50565225">Hemen satın al</a>
       <p class="note" style="margin-top:18px">Ödeme ve teslim Shopier üzerinden<br>Dosya siparişten hemen sonra iniyor</p>
+      <p class="refund">Dijital ürün · anında teslim · <b>iade yoktur</b><br>
+        <a href="iptal-iade-kosullari.html">İptal ve iade koşulları</a> ·
+        <a href="mesafeli-satis-sozlesmesi.html">Mesafeli satış sözleşmesi</a></p>
     </div>
 
     <div style="max-width:600px;margin-inline:auto">
@@ -786,6 +799,7 @@ footer a{color:var(--gold-2)}
       <details><summary>Ürettiği siteyi nereye yüklerim?</summary><p>ZIP kendi kendine yetiyor, dış dosya bağımlılığı yok. Cloudflare Pages, Netlify, Vercel veya klasik cPanel hostinge olduğu gibi yükleniyor. Kılavuzda üçünün de adımları var.</p></details>
       <details><summary>Yazılımı ben de satabilir miyim?</summary><p>Hayır. Ürettiğin siteleri müşterine satıyorsun ama yazılımın kendisini üçüncü kişilere satamıyor ve dağıtamıyorsun.</p></details>
       <details><summary>Güncelleme ücretli mi?</summary><p>Yayınlanan güncellemeler için ek ücret istenmiyor, satın alma kanalı üzerinden duyuruluyor. Güncelleme takvimi taahhüt edilmiyor.</p></details>
+      <details><summary>İade var mı?</summary><p>Yok. EsnafKoçu ödemeden hemen sonra indirilen dijital bir ürün; Mesafeli Sözleşmeler Yönetmeliği'nin 15/1-(ğ) maddesi gereği bu tür ürünlerde cayma hakkı kullanılamıyor. Bu yüzden satın almadan önce sormanı tercih ederim, aklına takılan her şeyi cevaplarım. Dosya hiç teslim edilemezse veya bozuk gelirse bedel elbette iade edilir; ayrıntısı <a href="iptal-iade-kosullari.html">iptal ve iade koşulları</a> sayfasında.</p></details>
       <details><summary>Windows mu, Mac mi?</summary><p>İkisi de. Pakette hem start.command hem start.bat var, kılavuzda ikisinin kurulumu ayrı ayrı anlatılıyor.</p></details>
     </div>
   </div>
@@ -807,6 +821,12 @@ footer a{color:var(--gold-2)}
 
 <footer>
   <div class="wrap">
+    <nav class="legal-nav">
+      <a href="mesafeli-satis-sozlesmesi.html">Mesafeli Satış Sözleşmesi</a>
+      <a href="iptal-iade-kosullari.html">İptal ve İade Koşulları</a>
+      <a href="teslimat.html">Teslimat</a>
+      <a href="gizlilik-ve-kvkk.html">Gizlilik ve KVKK</a>
+    </nav>
     © 2026 EsnafKoçu · Sürüm 1.0<br>
     Ödeme ve teslim: <a href="https://www.shopier.com/50565225">Shopier</a>
   </div>
