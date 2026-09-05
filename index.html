@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EsnafKoçu — Sitesi Olmayan İşletmeyi Bul, Sitesini Önceden Yap, Öyle Teklif Ver</title>
+<meta name="description" content="Google Haritalar'dan web sitesi olmayan yerel işletmeleri bulan, firmanın kendi bilgisiyle beş sayfalık demo site üreten masaüstü yazılım. Sınırsız kullanım, kaynak kodu açık, tek seferlik ödeme.">
+<link rel="canonical" href="https://ALANADIN.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="EsnafKoçu — Sitesini önceden yap, öyle teklif ver">
+<meta property="og:description" content="Sitesi olmayan yerel işletmeyi bul, tek tuşla demo sitesini üret, web sitesi hizmetini sat.">
+<meta property="og:url" content="https://ALANADIN.com/">
+<meta property="og:image" content="https://ALANADIN.com/img/og.jpg">
+<meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0f1c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* ============ TEMEL ============ */
+:root{
+  --bg:#0a0f1c; --bg-2:#0e1526; --bg-3:#131b2f;
+  --gold:#ffd642; --gold-2:#e8c451;
+  --text:#e9eef7; --dim:#98a6bd; --faint:#65728a;
+  --line:rgba(255,255,255,.09);
+  --line-2:rgba(255,214,66,.26);
+  --ok:#4ade80; --no:#f87171;
+  --shadow:0 18px 44px rgba(0,0,0,.45);
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+
+  --gutter:24px;
+  --wrap:1060px;
+  --measure:680px;
+  --pad:96px;
+  --gap:28px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:400 18px/1.72 var(--sans);-webkit-font-smoothing:antialiased;padding-bottom:80px}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+/* ============ IZGARA ============ */
+.wrap{width:min(100% - (var(--gutter) * 2), var(--wrap));margin-inline:auto}
+.text{max-width:var(--measure)}
+.mid{max-width:720px;margin-inline:auto;text-align:center}
+section{padding:var(--pad) 0;border-top:1px solid var(--line)}
+section.plain{border-top:0}
+.stack-gap > * + *{margin-top:var(--gap)}
+.stack-gap > .beat{margin-top:48px}
+.stack-gap > .beat + *{margin-top:48px}
+.stack-gap > .hr{margin-top:60px}
+.stack-gap > .hr + *{margin-top:60px}
+.stack-gap > .frame + *{margin-top:40px}
+
+/* ============ TİPOGRAFİ ============ */
+h1,h2,h3{font-family:var(--serif);line-height:1.14;text-wrap:balance;margin:0;letter-spacing:-.012em}
+h1{font-size:clamp(34px,5.2vw,56px);font-weight:700}
+h2{font-size:clamp(26px,3.4vw,38px);font-weight:700}
+h3{font-size:20px;font-weight:600;font-family:var(--sans);letter-spacing:-.005em}
+p{margin:0 0 20px}
+p:last-child{margin-bottom:0}
+strong{font-weight:600;color:#fff}
+.label{font:700 11.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:18px}
+.lede{font-size:clamp(19px,2.1vw,21px);color:var(--dim)}
+.body{color:var(--dim)}
+.body strong{color:#fff}
+.beat{font-family:var(--serif);font-weight:600;font-size:clamp(24px,3vw,32px);line-height:1.3;
+  color:#fff;letter-spacing:-.012em;margin:0}
+.beat.gold{color:var(--gold)}
+.mark{color:var(--gold);font-style:italic}
+.note{font:500 14px/1.6 var(--mono);color:var(--faint)}
+.hr{height:1px;background:var(--line);border:0;margin:0}
+
+/* ============ ÜST ŞERİT ============ */
+.bar{background:var(--gold);color:#20180a;text-align:center;padding:11px 16px;
+  font:700 13.5px/1.4 var(--mono);letter-spacing:.04em}
+
+/* ============ HERO ============ */
+.hero{padding:84px 0 var(--pad);position:relative;overflow:hidden;border-top:0}
+.hero:before{content:"";position:absolute;left:50%;top:-420px;transform:translateX(-50%);
+  width:1200px;height:820px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(ellipse,rgba(255,214,66,.12),rgba(255,214,66,0) 66%)}
+.hero .wrap{position:relative}
+.hero h1 em{font-style:italic;color:var(--gold)}
+
+/* ============ VİDEO ============ */
+.vsl{margin:0}
+.vsl-play{display:block;width:100%;position:relative;padding:0;border:1px solid var(--line-2);
+  background:#0d1424;border-radius:18px;overflow:hidden;cursor:pointer;
+  box-shadow:0 26px 60px rgba(0,0,0,.55);transition:transform .18s,box-shadow .18s}
+.vsl-play:hover{transform:translateY(-3px);box-shadow:0 32px 72px rgba(0,0,0,.6)}
+.vsl-play img{width:100%}
+.vsl-play .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:86px;height:86px;border-radius:50%;background:var(--gold);color:#20180a;
+  display:flex;align-items:center;justify-content:center;padding-left:5px;
+  box-shadow:0 12px 34px rgba(255,214,66,.3);transition:transform .18s}
+.vsl-play:hover .play{transform:translate(-50%,-50%) scale(1.06)}
+.vsl-hint{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);white-space:nowrap;
+  font:700 11.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);
+  background:rgba(10,15,28,.8);border:1px solid var(--line-2);border-radius:999px;padding:9px 16px}
+.vsl-frame{position:relative;width:100%;aspect-ratio:16/9;border:1px solid var(--line-2);
+  border-radius:18px;overflow:hidden;background:#000;box-shadow:0 26px 60px rgba(0,0,0,.55)}
+.vsl-frame iframe,.vsl-frame video{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* ============ BUTON ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;
+  background:var(--gold);color:#20180a;text-decoration:none;
+  font:700 18px/1 var(--sans);padding:19px 36px;border-radius:12px;
+  box-shadow:0 14px 32px rgba(255,214,66,.16);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(255,214,66,.24)}
+.btn.big{font-size:20px;padding:22px 44px}
+
+/* ============ LİSTELER ============ */
+.check{list-style:none;padding:0;margin:0}
+.check li{padding:15px 0 15px 34px;position:relative;border-bottom:1px solid var(--line);
+  font-size:17px;color:var(--dim);line-height:1.6}
+.check li:last-child{border-bottom:0;padding-bottom:0}
+.check li:first-child{padding-top:0}
+.check li:before{content:"";position:absolute;left:4px;top:23px;width:13px;height:7px;
+  border-left:2.5px solid var(--gold);border-bottom:2.5px solid var(--gold);transform:rotate(-45deg)}
+.check li:first-child:before{top:8px}
+.check b{font-weight:600;color:#fff}
+
+/* ============ AŞAMALAR ============ */
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+  padding:48px 0;border-top:1px solid var(--line)}
+.stage:first-of-type{border-top:0;padding-top:0}
+.stage:last-of-type{padding-bottom:0}
+.tag{display:inline-block;font:700 11.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--line-2);border-radius:999px;padding:8px 14px;margin-bottom:18px}
+.stage h3{margin-bottom:14px;font-size:21px}
+.stage p{font-size:17px;color:var(--dim)}
+/* --- tarayıcı çerçevesi --- */
+.frame{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0d1424;box-shadow:var(--shadow)}
+.browser{border:1px solid rgba(255,255,255,.13);border-radius:14px;overflow:hidden;
+  background:#111a2c;box-shadow:0 26px 60px rgba(0,0,0,.5)}
+.browser .chrome{display:flex;align-items:center;gap:10px;padding:11px 14px;
+  background:#162034;border-bottom:1px solid rgba(255,255,255,.09)}
+.browser .dots{display:flex;gap:6px;flex:0 0 auto}
+.browser .dots i{width:10px;height:10px;border-radius:50%;background:#31405c;display:block}
+.browser .dots i:first-child{background:#3d4d6b}
+.browser .url{flex:1;background:#0e1727;border:1px solid rgba(255,255,255,.07);border-radius:7px;
+  padding:5px 12px;font:500 11.5px/1.5 var(--mono);color:var(--faint);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.browser .shot{max-height:600px;overflow-y:auto;background:#fff}
+.browser .shot img{width:100%}
+.browser .shot.fit{max-height:none}
+.scroll-note{font:700 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);background:rgba(255,214,66,.09);border:1px solid var(--line-2);
+  border-radius:999px;padding:7px 13px;display:inline-block}
+
+/* --- el yazısı + künye --- */
+.hand{font:700 24px/1.25 'Caveat','Segoe Script','Bradley Hand',cursive;color:var(--gold);margin-top:16px}
+.cap{font:500 12.5px/1.7 var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--faint);margin-top:8px}
+figure{margin:0}
+
+/* --- çizim şeridi --- */
+.sketch{display:flex;align-items:flex-start;justify-content:center;gap:8px;flex-wrap:wrap;
+  padding:8px 0}
+.sketch .step{width:150px;text-align:center}
+.sketch .step svg{margin-inline:auto}
+.sketch .step b{display:block;font:700 22px/1.25 'Caveat','Segoe Script','Bradley Hand',cursive;color:var(--gold);margin-top:8px}
+.sketch .step span{display:block;font:500 11px/1.5 var(--mono);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--faint);margin-top:4px}
+.sketch .arrow{flex:0 0 auto;margin-top:44px;opacity:.7}
+
+/* --- uyarı kutusu --- */
+.callout{border:1px solid var(--line-2);border-radius:14px;padding:22px 26px;
+  background:rgba(255,214,66,.05)}
+.callout .k{font:700 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:10px}
+.callout p{margin:0;color:var(--text);font-size:17px}
+.callout b{color:var(--gold)}
+
+.phone{max-width:252px}
+.device{position:relative;border:10px solid #1b2740;border-radius:34px;overflow:hidden;
+  background:#1b2740;box-shadow:0 26px 60px rgba(0,0,0,.55)}
+.device:before{content:"";position:absolute;left:50%;top:8px;transform:translateX(-50%);
+  width:76px;height:6px;border-radius:99px;background:#0e1727;z-index:2}
+.device img{width:100%;border-radius:24px}
+
+/* ============ İKİ SÜTUN KART ============ */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:28px;box-shadow:var(--shadow)}
+.panel h3{margin-bottom:16px;font-size:18px}
+.panel ul{list-style:none;margin:0;padding:0}
+.panel li{padding:9px 0 9px 28px;position:relative;font-size:16.5px;color:var(--dim);line-height:1.55}
+.panel li:before{position:absolute;left:0;top:9px;font:700 15px/1.55 var(--sans)}
+.panel.go li:before{content:"✓";color:var(--ok)}
+.panel.no li:before{content:"✕";color:var(--no)}
+.panel.go h3{color:var(--ok)}
+.panel.no h3{color:var(--no)}
+.panel.quiet{background:transparent;box-shadow:none}
+.panel.quiet h3{color:var(--faint)}
+.panel.hi{border-color:var(--line-2)}
+.panel.hi h3{color:var(--gold)}
+.panel.quiet li,.panel.hi li{padding-left:20px}
+.panel.quiet li:before,.panel.hi li:before{content:"—";color:var(--faint)}
+.panel.hi li:before{color:var(--gold)}
+
+/* ============ TEKLİF YIĞINI ============ */
+.stack{background:var(--bg-2);border:1px solid var(--line-2);border-radius:18px;
+  padding:32px;box-shadow:var(--shadow)}
+.stack .row{display:grid;grid-template-columns:34px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.stack .row:first-child{border-top:0;padding-top:0}
+.stack .row:last-child{padding-bottom:0}
+.stack .ico{font:700 12.5px/34px var(--mono);color:var(--gold);text-align:center;
+  border:1px solid var(--line-2);border-radius:9px;height:34px}
+.stack h3{font-size:18px;margin-bottom:4px}
+.stack p{color:var(--dim);font-size:16px}
+
+/* ============ FİYAT ============ */
+.pricebox{background:linear-gradient(180deg,var(--bg-3),var(--bg-2));
+  border:1px solid var(--line-2);border-radius:20px;padding:46px 34px;
+  max-width:600px;margin-inline:auto;text-align:center;box-shadow:var(--shadow)}
+.limit{display:inline-flex;align-items:center;gap:9px;background:rgba(255,214,66,.09);
+  border:1px solid var(--line-2);color:var(--gold);border-radius:999px;
+  padding:9px 18px;font:700 12.5px/1 var(--mono);letter-spacing:.08em;margin-bottom:22px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block;
+  box-shadow:0 0 0 0 rgba(255,214,66,.55);animation:pulse 2.2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(255,214,66,0)}100%{box-shadow:0 0 0 0 rgba(255,214,66,0)}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+.old{font:500 18px/1 var(--mono);color:var(--faint);text-decoration:line-through}
+.now{font:700 clamp(48px,7vw,68px)/1 var(--serif);color:var(--gold);margin:10px 0 12px}
+
+/* ============ SSS ============ */
+details{border-bottom:1px solid var(--line);padding:20px 0}
+details:first-of-type{padding-top:0}
+summary{cursor:pointer;font:600 17.5px/1.5 var(--sans);list-style:none;
+  display:flex;justify-content:space-between;gap:24px;color:#fff}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";color:var(--gold);font-size:24px;line-height:1.1}
+details[open] summary:after{content:"–"}
+details p{margin-top:14px;color:var(--dim);font-size:16.5px;max-width:var(--measure)}
+
+/* ============ SABİT ÇUBUK ============ */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(10,15,28,.96);
+  backdrop-filter:blur(10px);border-top:1px solid var(--line-2);padding:13px var(--gutter);
+  display:flex;align-items:center;justify-content:center;gap:20px}
+.sticky span{color:var(--dim);font:500 13.5px/1 var(--mono);white-space:nowrap}
+.sticky b{color:var(--gold)}
+.sticky .btn{padding:13px 26px;font-size:16px;box-shadow:none}
+
+footer{padding:44px 0 34px;font:500 13.5px/1.9 var(--mono);color:var(--faint);
+  text-align:center;border-top:1px solid var(--line)}
+footer a{color:var(--gold-2)}
+
+
+/* ============ RÜTBE ROZETİ ============ */
+.badge-row{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.badge{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:var(--gold);
+  color:#20180a;display:flex;align-items:center;justify-content:center;
+  font:700 15px/1 var(--sans)}
+.badge-row .label{margin:0}
+
+/* ============ KART PANEL ============ */
+.card-panel{border:1px solid var(--line);border-radius:18px;padding:34px;background:var(--bg-2);
+  box-shadow:var(--shadow)}
+.card-panel .text{max-width:none}
+
+/* ============ SAYI ŞERİDİ ============ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.stats div{background:var(--bg-2);padding:26px 22px}
+.stats b{display:block;font:700 34px/1 var(--serif);color:var(--gold);letter-spacing:-.02em}
+.stats span{display:block;font:500 11.5px/1.5 var(--mono);letter-spacing:.09em;
+  text-transform:uppercase;color:var(--faint);margin-top:10px}
+@media (max-width:768px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* ============ MOBİL ============ */
+@media (max-width:768px){
+  :root{--pad:56px;--gap:22px;--gutter:20px}
+  body{font-size:17px}
+  .stage,.duo{grid-template-columns:1fr;gap:24px}
+  .stage{padding:32px 0}
+  .phone{max-width:240px;margin-inline:auto}
+  .stack{padding:24px 20px}
+  .pricebox{padding:34px 22px}
+  .vsl-play .play{width:60px;height:60px}
+  .vsl-play .play svg{width:24px;height:24px}
+  .vsl-hint{bottom:12px;font-size:10px;padding:7px 12px}
+  .sticky span{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">LANSMAN FİYATI · İLK 5 ALICI · SONRASINDA 2.000 TL</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap stack-gap">
+    <div class="mid">
+      <span class="label">Yerel işletmelere web sitesi satanlar için</span>
+      <h1>Siteyi <em>önce</em> yap.<br>Teklifi <em>sonra</em> ver.</h1>
+      <p class="lede" style="margin-top:22px">Sitesi olmayan yerel işletmeyi bul, kendi bilgisiyle beş sayfalık sitesini üret, öyle teklif ver. Nasıl çalıştığını videoda anlatıyorum.</p>
+    </div>
+
+    <div class="vsl" id="vsl">
+      <button class="vsl-play" type="button" aria-label="Tanıtım videosunu oynat">
+        <img src="img/vsl-poster.jpg" alt="EsnafKoçu tanıtım videosu" width="1600" height="900" fetchpriority="high">
+        <span class="play"><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+        <span class="vsl-hint">Videoyu izle · 3 dk</span>
+      </button>
+    </div>
+
+    <div class="mid">
+      <a class="btn big" href="#satinal">1.000 TL — hemen satın al</a>
+      <p class="note" style="margin-top:18px">Tek seferlik ödeme · Sınırsız kullanım · Kaynak kodu açık · 30 gün destek</p>
+    </div>
+  </div>
+</header>
+
+<!-- ============ EVET MERDİVENİ ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">1</span><span class="label">Baştan anlaşalım</span></div>
+      <h2>Eğer yerel işletmelere web sitesi satıyorsan, bazı şeyleri sen de biliyorsun.</h2>
+    </div>
+    <ul class="check text">
+      <li>Bir esnafa düzgün bir site kurmak gerçekten para eden bir iş.</li>
+      <li>O siteyi yapabilecek kadar biliyorsun; iş çıkarmak senin için sorun değil.</li>
+      <li>Sitesi olmayan bir işletmenin kaçırdığı müşteri var ve sen bunu düzeltebilirsin.</li>
+    </ul>
+    <p class="beat gold text">Ama şunu da biliyorsun: iş bulmak, işi yapmaktan zor.</p>
+  </div>
+</section>
+
+<!-- ============ PROBLEM ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">2</span><span class="label">Tanıdık gelecek</span></div>
+      <div class="body">
+        <p>Sabah listeyi açıyorsun. Kırk firma adı, kırk telefon.</p>
+        <p>Birini arıyorsun, web sitesi yaptırmak ister misiniz diye soruyorsun. Adam "gerek yok, işler Instagram'dan yürüyor" deyip kapatıyor. İkincisi hiç açmıyor. Üçüncüsü "gönder de bakalım" diyor ama gönderecek bir şeyin yok.</p>
+        <p>Akşam olduğunda listenin yarısı bitiyor ve geriye hiçbir şey kalmıyor.</p>
+      </div>
+    </div>
+
+    <p class="beat text">Bir noktada şunu fark ediyorsun: sen aslında web sitesi yapmıyorsun, gününü telefonda geçiriyorsun.</p>
+
+    <p class="body text">Ne kadar iyi iş çıkarırsan çıkar bu döngü kırılmıyor, çünkü sorun senin işinde değil.</p>
+
+    <ul class="check text">
+      <li><b>Yanlış kapıyı çalıyorsun.</b> Aradığın firmaların çoğunun zaten sitesi var.</li>
+      <li><b>Elin boş gidiyorsun.</b> Anlatıyorsun ama gösteremiyorsun.</li>
+      <li><b>Aynı işi baştan yapıyorsun.</b> Bulmak ayrı gün, yapmak ayrı gün.</li>
+    </ul>
+
+    <p class="body text">Çözüm daha çok aramak değil. Herkesin günü 24 saat, seninki de öyle. Daha fazla telefon açmak sadece daha çok yorulmak demek.</p>
+  </div>
+</section>
+
+<!-- ============ MEKANİZMA ============ -->
+<section>
+  <div class="wrap">
+    <div class="mid stack-gap">
+      <div>
+        <div class="badge-row"><span class="badge">3</span><span class="label">Mekanizma</span></div>
+        <h2>Çözüm, teklifi konuşmadan önce işi bitirmiş olmak.</h2>
+      </div>
+      <p class="body">Karşı tarafa "size site yapayım mı" diye sorduğunda hayal satıyorsun. Ona kendi işletmesinin, kendi fotoğraflarıyla hazırlanmış sitesinin linkini gönderdiğinde gerçek bir şey gösteriyorsun. Bu iki konuşma aynı konuşma değil.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ELLE OLMUYOR + HİKÂYE ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text body">
+      <div class="badge-row"><span class="badge">4</span><span class="label">Ama bir sorun var</span></div>
+      <p>Bunu elle yapmak mümkün değil.</p>
+      <p>Google Haritalar'da bir ilçeye bakıyorsun, kartları tek tek açıyorsun, "Web sitesi" satırı var mı diye kontrol ediyorsun, olmayanları not alıyorsun. İki saat sonra elinde on isim oluyor ve gözlerin yanıyor.</p>
+      <p>Diyelim ki buldun. Şimdi her biri için bir site yapman gerekiyor. Bir site bir gün, on firma on gün. Üstelik hiçbiri sana daha para ödemeden.</p>
+    </div>
+
+    <p class="beat text">Doğru yöntemi biliyorsun ama uygulayamıyorsun, çünkü tek başına bunu kaldıracak zaman yok.</p>
+
+    <hr class="hr">
+
+    <div class="card-panel">
+      <div class="badge-row"><span class="badge">★</span><span class="label">Bir akşam denedim</span></div>
+      <div class="body">
+      <p>Kadıköy'de "diş kliniği" araması yaptım.</p>
+      <p>Program 23 firma kaydını açtı. Yirmisinin sitesi vardı, üçünün yoktu — puanları iyiydi, yorumları vardı, telefonları çalışıyordu ama siteleri yoktu.</p>
+      <p>Üçünün de Google fotoğrafları indi. Birini seçtim ve tek tuşa bastım. <strong>Saniyeler içinde</strong> o kliniğe ait beş sayfalık bir site çıktı: kendi iç mekân fotoğrafı hero bölümünde, kendi puanı, kendi telefonu, kendi adresi ve haritası.</p>
+      </div>
+      <div class="stats" style="margin-top:26px">
+        <div><b>23</b><span>Açılan kayıt</span></div>
+        <div><b>3</b><span>Sitesiz klinik</span></div>
+        <div><b>5</b><span>Üretilen sayfa</span></div>
+        <div><b>&lt;10 sn</b><span>Üretim süresi</span></div>
+      </div>
+    </div>
+
+    <p class="beat text">İki saatlik iş iki dakikaya, bir günlük iş birkaç saniyeye indi.</p>
+
+    <p class="body text">Asıl mesele site yapmayı bilmek değilmiş. Asıl mesele <span class="mark">doğru firmayı bulup ona gösterecek bir şeyle gitmekmiş.</span> Gerisi kendiliğinden geliyor.</p>
+  </div>
+</section>
+
+<!-- ============ ÜRÜN ============ -->
+<section>
+  <div class="wrap">
+    <div class="mid stack-gap">
+      <div>
+        <div class="badge-row"><span class="badge">5</span><span class="label">Tanıştıralım</span></div>
+        <h2>EsnafKoçu</h2>
+      </div>
+      <p class="body">Kendi bilgisayarında çalışan bir masaüstü programı. Sitesi olmayan yerel işletmeleri buluyor, seçtiğin firmaya kendi bilgisiyle beş sayfalık demo site üretiyor. Üç aşamada çalışıyor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AŞAMALAR ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">6</span><span class="label">Üç adım</span></div>
+      <h2>Bul, üret, gönder.</h2>
+    </div>
+
+    <div class="sketch">
+      <div class="step">
+        <svg viewBox="0 0 84 84" width="80" height="80" fill="none" stroke="#ffd642" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M35 11c-13.2.4-23 10.6-23 23.4C12 47.6 22.2 58 35.2 57.8 48 57.6 58 47.2 58 34.4 58 21.6 48 11 35 11z"/>
+          <path d="M53.5 52.5 71 70.5"/>
+          <path d="M35 23.5c-4.6-.2-8.4 3.4-8.4 7.9 0 5.6 8.2 14.2 8.2 14.2s8.4-8.4 8.4-14.1c0-4.5-3.7-8.1-8.2-8z" stroke="#e9eef7"/>
+          <path d="M35.2 28.7c-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.7-1.2 2.7-2.7-1.2-2.7-2.7-2.7z" stroke="#e9eef7"/>
+        </svg>
+        <b>Bul</b><span>Sitesiz firma</span>
+      </div>
+
+      <svg class="arrow" viewBox="0 0 60 24" width="54" height="24" fill="none" stroke="#65728a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13c13-7 29 5 44-1"/><path d="M40 5.5 48.5 12 40 18.5"/></svg>
+
+      <div class="step">
+        <svg viewBox="0 0 84 84" width="80" height="80" fill="none" stroke="#ffd642" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11.5 17.5h61c.6 0 1 .5 1 1.1v46c0 .6-.5 1.1-1.1 1.1H11.4c-.6 0-1-.5-1-1.1V18.7c0-.7.5-1.2 1.1-1.2z"/>
+          <path d="M10.7 29.5h63"/>
+          <path d="M17.5 23.6h.1M23.5 23.6h.1M29.5 23.6h.1"/>
+          <path d="M19 39.5h26M19 48h34M19 56.5h18" stroke="#e9eef7"/>
+          <path d="M60.5 44.5l2.6 6.3 6.4 2.5-6.4 2.6-2.6 6.3-2.5-6.3-6.4-2.6 6.4-2.5z" stroke="#e9eef7"/>
+        </svg>
+        <b>Üret</b><span>Tek tuşla site</span>
+      </div>
+
+      <svg class="arrow" viewBox="0 0 60 24" width="54" height="24" fill="none" stroke="#65728a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13c13-7 29 5 44-1"/><path d="M40 5.5 48.5 12 40 18.5"/></svg>
+
+      <div class="step">
+        <svg viewBox="0 0 84 84" width="80" height="80" fill="none" stroke="#ffd642" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9.5 40.5 73.5 12.5 56.5 71.5 40.5 51z"/>
+          <path d="M40.5 51 73.5 12.5" stroke="#e9eef7"/>
+          <path d="M27 62.5 40.5 51v18z" stroke="#e9eef7"/>
+        </svg>
+        <b>Gönder</b><span>Linki yolla</span>
+      </div>
+    </div>
+
+    <hr class="hr">
+
+    <!-- AŞAMA 1 -->
+    <div class="text">
+      <span class="tag">Aşama 1 — Bul</span>
+      <h3>İl, ilçe ve sektörü giriyorsun</h3>
+      <div class="body" style="margin-top:14px">
+        <p>Program Google Haritalar'ı senin bilgisayarında geziyor. "Sadece web sitesi olmayanlar" kutusunu işaretlediğinde liste derinlemesine taranıyor ve hedeflediğin sayıda sitesiz firma bulunana kadar devam ediyor.</p>
+        <p>Firmanın adı, kategorisi, puanı, yorum sayısı, telefonu, adresi, çalışma saatleri ve Google fotoğrafları kaydediliyor. Listeyi Excel veya JSON olarak dışarı alıyorsun.</p>
+      </div>
+    </div>
+    <figure>
+      <div class="browser">
+        <div class="chrome"><span class="dots"><i></i><i></i><i></i></span><span class="url">127.0.0.1:8000 — EsnafKoçu paneli</span></div>
+        <div class="shot fit"><img src="img/tarama.jpg" alt="Tarama sonucu: web sitesi olmayan firmaların listesi" loading="lazy" width="1500" height="1050"></div>
+      </div>
+      <figcaption>
+        <p class="hand">Web sitesi sütunu "Yok" olanlar senin listen.</p>
+        <p class="cap">Gerçek tarama · Kadıköy · telefonlar gizlendi</p>
+      </figcaption>
+    </figure>
+
+    <hr class="hr">
+
+    <!-- AŞAMA 2 -->
+    <div class="text">
+      <span class="tag">Aşama 2 — Üret</span>
+      <h3>Tek tuşa basıyorsun, site hazır oluyor</h3>
+      <div class="body" style="margin-top:14px">
+        <p>Beş sayfa saniyeler içinde çıkıyor: ana sayfa, hizmetler, hakkımızda, galeri, iletişim. Firmanın kendi Google fotoğrafları hero bölümüne ve galeriye yerleşiyor, puanı ve yorum sayısı sayfada duruyor, telefonu ve haritası yerine oturuyor.</p>
+        <p>Aşağıdaki kare gerçek: yukarıda anlattığım taramadan çıkan kliniğin sitesi.</p>
+      </div>
+    </div>
+    <figure>
+      <div class="browser">
+        <div class="chrome"><span class="dots"><i></i><i></i><i></i></span><span class="url">dentway-kadikoy.com — EsnafKoçu ile üretildi</span></div>
+        <div class="shot"><img src="img/site.jpg" alt="Taramadan çıkan firmaya tek tuşla üretilen sitenin tamamı" loading="lazy" width="1100" height="5160"></div>
+      </div>
+      <figcaption>
+        <p class="hand">Fotoğraflar firmanın kendi Google kaydından.</p>
+        <p class="cap"><span class="scroll-note">↕ Kaydırarak sayfanın tamamını gez</span></p>
+      </figcaption>
+    </figure>
+
+    <hr class="hr">
+
+    <!-- AŞAMA 3 -->
+    <div class="stage" style="border-top:0;padding-top:0;align-items:start">
+      <div>
+        <span class="tag">Aşama 3 — Gönder</span>
+        <h3>Ve o mesajı atıyorsun</h3>
+        <div class="body">
+          <p>Program WhatsApp taslağını hazırlıyor, göndermeye sen karar veriyorsun. Karşı taraf linke tıklıyor ve kendi işletmesini görüyor.</p>
+          <p>Konuşma o an değişiyor. Artık "web sitesi lazım mı" diye tartışmıyorsunuz, "şu başlığı da değiştirelim mi" diye konuşuyorsunuz.</p>
+          <p>Mobilde ekranın altında sabit bir <strong>Ara / WhatsApp</strong> çubuğu duruyor; telefondan bakan müşteri tek dokunuşla arıyor.</p>
+        </div>
+      </div>
+      <figure class="phone" style="margin-inline:auto">
+        <div class="device"><img src="img/mobil.jpg" alt="Üretilen sitenin mobil görünümü" loading="lazy" width="420" height="908"></div>
+        <figcaption><p class="hand" style="text-align:center">Alttaki çubuk hep ekranda kalıyor.</p></figcaption>
+      </figure>
+    </div>
+
+    <div class="callout">
+      <span class="k">▶ Şunu unutma</span>
+      <p>Gönderdiğin linkte firmanın kendi fotoğrafı, kendi puanı ve kendi telefonu duruyor. <b>İşte bu yüzden cevap geliyor.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KİMİN İÇİN ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">7</span><span class="label">Önce şunu netleştirelim</span></div>
+      <h2>Bu program herkes için değil.</h2>
+    </div>
+    <div class="duo">
+      <div class="panel go">
+        <h3>Sana göre</h3>
+        <ul>
+          <li>Yerel işletmelere web sitesi satıyorsun ya da satmak istiyorsun</li>
+          <li>Site kurmayı biliyorsun, sorunun müşteri bulmak</li>
+          <li>Freelance çalışıyorsun ya da küçük bir ajansın var</li>
+          <li>Soğuk aramadan sıkıldın, elinde gösterecek bir şey istiyorsun</li>
+          <li>Verisi sende kalan bir araç arıyorsun</li>
+        </ul>
+      </div>
+      <div class="panel no">
+        <h3>Sana göre değil</h3>
+        <ul>
+          <li>Tuşa basınca müşteri getiren bir düğme arıyorsan</li>
+          <li>İzinsiz toplu mesaj atmayı planlıyorsan</li>
+          <li>Sahte yorum ve uydurma referans üreten bir araç istiyorsan</li>
+          <li>Yazılımı alıp kendi ürünün gibi satmayı düşünüyorsan</li>
+          <li>Bilgisayarına program kurmak istemiyorsan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEDEN FARKLI ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">8</span><span class="label">Bunu farklı kılan ne</span></div>
+      <h2>Abonelik değil, alet.</h2>
+    </div>
+    <div class="text body">
+      <p>Benzer araçların çoğu aylık ödemeli panellerdir. Verini onların sunucusunda tutarlar, ödemeyi kestiğinde elindeki her şey gider ve kaç tarama yapacağını kredi sistemiyle onlar belirler.</p>
+      <p>EsnafKoçu öyle değil. Program senin bilgisayarına kuruluyor ve orada çalışıyor.</p>
+    </div>
+    <ul class="check text">
+      <li><b>Veri sende kalıyor.</b> Bulduğun firmalar, ürettiğin siteler, hepsi kendi diskinde.</li>
+      <li><b>Sınır yok.</b> Kaç tarama yaparsan yap, kaç site üretirsen üret, kaç müşteriye satarsan sat.</li>
+      <li><b>Aylık ücret yok.</b> Bir kere ödüyorsun, o kadar.</li>
+      <li><b>Kaynak kodu açık ve şifresiz.</b> İstersen kendin değiştiriyorsun, kendi markanla kullanıyorsun.</li>
+      <li><b>Sunucu bağımlılığı yok.</b> Kapansa da dosyaların yerinde duruyor.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ PANEL ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">9</span><span class="label">Müşteri tamam dediğinde</span></div>
+      <h2>Sitedeki her bölüme panelden müdahale ediyorsun.</h2>
+      <p class="body" style="margin-top:18px">Metinler, hizmet kartları, görseller, logo, renkler ve SEO alanları tek ekranda. Boş bıraktığın her alan otomatik dolduruluyor, yani hiçbir şey yazmadan da site çıkıyor.</p>
+    </div>
+    <figure>
+      <div class="browser">
+        <div class="chrome"><span class="dots"><i></i><i></i><i></i></span><span class="url">127.0.0.1:8000 — Bilgileri Düzenle</span></div>
+        <div class="shot fit"><img src="img/duzenle.jpg" alt="Bilgileri Düzenle ekranı" loading="lazy" width="1500" height="1050"></div>
+      </div>
+      <figcaption><p class="hand">Boş bıraktığın alanı program kendi dolduruyor.</p></figcaption>
+    </figure>
+
+    <div class="text" style="margin-top:20px">
+      <h2>Sektöre göre üç tasarım ailesi.</h2>
+      <p class="body" style="margin-top:16px">Lacivert &amp; Altın, Mavi &amp; Beyaz, Krem &amp; Yeşil. Program kategoriye bakıp kendi seçiyor, beğenmezsen elle değiştiriyorsun.</p>
+    </div>
+    <figure>
+      <div class="frame"><img src="img/stiller.jpg" alt="Üç tasarım ailesi yan yana" loading="lazy" width="1956" height="952"></div>
+      <figcaption>
+        <p class="hand">Aynı motor, üç ayrı yüz.</p>
+        <p class="cap">Bu karedeki firma bilgileri örnektir</p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ TEKLİF YIĞINI ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">10</span><span class="label">Paketi açtığında</span></div>
+      <h2>Elinde tam olarak şunlar oluyor.</h2>
+    </div>
+    <div class="stack">
+      <div class="row"><div class="ico">01</div><div>
+        <h3>Google Haritalar tarayıcısı</h3>
+        <p>İl, ilçe, sektör ve "sitesi olmayanlar" filtresi. Puan, yorum, telefon, adres, saatler ve fotoğraflar. Excel ve JSON dışa aktarma.</p></div></div>
+      <div class="row"><div class="ico">02</div><div>
+        <h3>Beş sayfalık site üretici</h3>
+        <p>Ana sayfa, hizmetler, hakkımızda, galeri, iletişim. Tek tuşla üretim, tek tuşla ZIP indirme.</p></div></div>
+      <div class="row"><div class="ico">03</div><div>
+        <h3>Üç tasarım ailesi</h3>
+        <p>Sektöre göre otomatik seçiliyor, elle değiştirilebiliyor. Ana renk ve vurgu rengi firmanın markasına uyduruluyor.</p></div></div>
+      <div class="row"><div class="ico">04</div><div>
+        <h3>Bilgileri Düzenle paneli</h3>
+        <p>Hero, hakkımızda, hizmet kartları, neden biz, sık sorulanlar, galeri, logo, renkler ve SEO alanları.</p></div></div>
+      <div class="row"><div class="ico">05</div><div>
+        <h3>Google fotoğrafı seçici</h3>
+        <p>Firmanın kendi fotoğraflarını hero'ya, hakkımızda bölümüne veya galeriye yerleştiriyorsun. Kendi dosyanı da yükleyebiliyorsun.</p></div></div>
+      <div class="row"><div class="ico">06</div><div>
+        <h3>SEO çıktısı</h3>
+        <p>Canonical, Open Graph, Twitter etiketleri, LocalBusiness ve SSS yapısal verisi, sitemap.xml ve robots.txt.</p></div></div>
+      <div class="row"><div class="ico">07</div><div>
+        <h3>WhatsApp taslağı ve talep formu</h3>
+        <p>Firmaya gidecek metin hazırlanıyor. Sitedeki form statik hostingde de çalışıyor; gelen talep WhatsApp'a, WhatsApp yoksa e-postaya düşüyor.</p></div></div>
+      <div class="row"><div class="ico">08</div><div>
+        <h3>Kullanım Kılavuzu ve Pazarlama Rehberi</h3>
+        <p>macOS ve Windows kurulumu adım adım, panelin her ekranı, yayınlama yolları, satış akışı ve sorun giderme bölümü.</p></div></div>
+      <div class="row"><div class="ico">09</div><div>
+        <h3>Kaynak kodun tamamı</h3>
+        <p>Hiçbir dosya şifrelenmemiş. İncelersin, değiştirirsin, kendi ihtiyacına göre geliştirirsin.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DÜRÜST SINIRLAR ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">11</span><span class="label">Dürüst olalım</span></div>
+      <h2>Neyi yapmadığını da yazayım.</h2>
+    </div>
+    <ul class="check text">
+      <li>Uydurma yorum, sahte ekip veya uydurma fiyat üretmiyor. Yalnızca Google kaydındaki bilgiyi ve senin girdiğin onaylı bilgiyi kullanıyor.</li>
+      <li>Üretilen her sayfanın üstünde "taslak demodur, yayın öncesi firma onayı gerekir" uyarısı duruyor.</li>
+      <li>Otomatik toplu WhatsApp gönderimi yok. Taslağı hazırlıyor, mesajı sen gönderiyorsun.</li>
+      <li>Google sayfa yapısını değiştirirse tarama bölümü etkilenebiliyor; o durumda güncelleme yayınlanıyor.</li>
+      <li>Sihir yok. Firmayı bulmayı ve ilk izlenimi hazırlamayı üstleniyor, satışı sen yapıyorsun.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ FİYAT ============ -->
+<section id="satinal">
+  <div class="wrap stack-gap">
+    <div class="pricebox">
+      <span class="limit"><span class="dot"></span> LANSMAN KONTENJANI · 5 ADET</span>
+      <div class="old">2.000 TL</div>
+      <div class="now">1.000 TL</div>
+      <p class="body" style="margin-bottom:26px">Tek seferlik ödeme. 5 adet tükendiğinde satış kendiliğinden kapanıyor ve fiyat 2.000 TL'ye çıkıyor.</p>
+      <a class="btn big" href="https://www.shopier.com/50565225">Hemen satın al</a>
+      <p class="note" style="margin-top:18px">Ödeme ve teslim Shopier üzerinden<br>Dosya siparişten hemen sonra iniyor</p>
+    </div>
+
+    <div style="max-width:600px;margin-inline:auto">
+      <h3 style="text-align:center;margin-bottom:18px">Butona bastığında şunlar oluyor</h3>
+      <ul class="check">
+        <li>Programın tamamını ZIP olarak indiriyorsun, kaynak kodu dahil.</li>
+        <li>Kullanım kılavuzu ve pazarlama rehberi paketin içinden çıkıyor.</li>
+        <li>Tek dosyaya çift tıklayıp kuruyorsun, on dakika içinde ilk taramanı yapıyorsun.</li>
+        <li>Otuz gün boyunca kurulum ve kullanım sorularını bana sorabiliyorsun.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LİSANS ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">12</span><span class="label">Lisans</span></div>
+      <h2>Ne yapabilirsin, ne yapamazsın.</h2>
+    </div>
+    <div class="duo">
+      <div class="panel go">
+        <h3>Serbest</h3>
+        <ul>
+          <li>Sınırsız kurulum, sınırsız tarama, sınırsız site, sınırsız müşteri</li>
+          <li>Kaynak kodu değiştirme ve kendi markanla kullanma</li>
+          <li>Ürettiğin siteleri satma — gelirin tamamı sende kalıyor</li>
+        </ul>
+      </div>
+      <div class="panel no">
+        <h3>Serbest değil</h3>
+        <ul>
+          <li>Yazılımın kendisini üçüncü kişilere satma, kiralama veya dağıtma</li>
+          <li>Değiştirilmiş hâlini dağıtma</li>
+          <li>Kendi ürünün gibi yeniden paketleyip pazarlama</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ İKİ YOL ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">13</span><span class="label">Seçim senin</span></div>
+      <h2>İki yol var.</h2>
+    </div>
+    <div class="duo">
+      <div class="panel quiet">
+        <h3>Bugünkü yol</h3>
+        <ul>
+          <li>Listeyi açmaya devam edersin</li>
+          <li>Aynı cevapları duyarsın</li>
+          <li>Gösterecek bir şeyin olmaz</li>
+          <li>Ayın sonunda yine aynı yerde durursun</li>
+        </ul>
+      </div>
+      <div class="panel hi">
+        <h3>Diğer yol</h3>
+        <ul>
+          <li>Sitesiz firmaları on dakikada listelersin</li>
+          <li>Seçtiğine tek tuşla site üretirsin</li>
+          <li>Linki gönderir, cevabı beklersin</li>
+          <li>Konuşma "yapalım mı" değil "ne zaman" olur</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SSS ============ -->
+<section>
+  <div class="wrap stack-gap">
+    <div class="text">
+      <div class="badge-row"><span class="badge">14</span><span class="label">Sık sorulanlar</span></div>
+      <h2>Aklına takılanlar</h2>
+    </div>
+    <div>
+      <details open><summary>Kurulum zor mu?</summary><p>macOS'ta start.command, Windows'ta start.bat dosyasına çift tıklıyorsun. İlk açılışta gerekli bileşenler iniyor, sonraki açılışlar birkaç saniye sürüyor. Bilgisayarında Python 3 kurulu olması yeterli; kılavuzda onun kurulumu da anlatılıyor.</p></details>
+      <details><summary>Kaç firma çekebiliyorum?</summary><p>Sınır yok. Tarama sayısı, üretilen site sayısı ve müşteri sayısı sınırsız. Aylık ücret de yok.</p></details>
+      <details><summary>Google engellemez mi?</summary><p>Program tarayıcıyı senin bilgisayarında açıyor ve herkese açık sayfaları geziyor, hız ayarları makul tutuldu. Yine de tek oturumda binlerce kayıt çekmeye çalışma.</p></details>
+      <details><summary>Yapay zekâ şart mı?</summary><p>Değil. OpenAI anahtarı girmezsen program tam olarak çalışıyor, metinler firma bilgisinden hazırlanıyor.</p></details>
+      <details><summary>Ürettiği siteyi nereye yüklerim?</summary><p>ZIP kendi kendine yetiyor, dış dosya bağımlılığı yok. Cloudflare Pages, Netlify, Vercel veya klasik cPanel hostinge olduğu gibi yükleniyor. Kılavuzda üçünün de adımları var.</p></details>
+      <details><summary>Yazılımı ben de satabilir miyim?</summary><p>Hayır. Ürettiğin siteleri müşterine satıyorsun ama yazılımın kendisini üçüncü kişilere satamıyor ve dağıtamıyorsun.</p></details>
+      <details><summary>Güncelleme ücretli mi?</summary><p>Yayınlanan güncellemeler için ek ücret istenmiyor, satın alma kanalı üzerinden duyuruluyor. Güncelleme takvimi taahhüt edilmiyor.</p></details>
+      <details><summary>Windows mu, Mac mi?</summary><p>İkisi de. Pakette hem start.command hem start.bat var, kılavuzda ikisinin kurulumu ayrı ayrı anlatılıyor.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SON ÇAĞRI ============ -->
+<section>
+  <div class="wrap">
+    <div class="mid stack-gap">
+      <h2>Bir müşteriye sattığın tek site bunu zaten çıkarıyor.</h2>
+      <p class="body">Gerisi sana kalıyor. Kontenjan 5 kişi, sonrasında fiyat iki katına çıkıyor.</p>
+      <div>
+        <a class="btn big" href="https://www.shopier.com/50565225">1.000 TL — hemen satın al</a>
+        <p class="note" style="margin-top:18px">Sınırsız kullanım · Kaynak kodu açık · 30 gün teknik destek</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    © 2026 EsnafKoçu · Sürüm 1.0<br>
+    Ödeme ve teslim: <a href="https://www.shopier.com/50565225">Shopier</a>
+  </div>
+</footer>
+
+<div class="sticky">
+  <span><b>1.000 TL</b> · İLK 5 ALICI · SONRASI 2.000 TL</span>
+  <a class="btn" href="https://www.shopier.com/50565225">Satın al</a>
+</div>
+
+<script>
+/* ------------------------------------------------------------------
+   VİDEO AYARI — buraya kendi videonu yaz.
+   YouTube  : VIDEO = "yt:VIDEO_ID"        ör. "yt:dQw4w9WgXcQ"
+   Vimeo    : VIDEO = "vimeo:VIDEO_ID"     ör. "vimeo:123456789"
+   Kendi MP4: VIDEO = "video/tanitim.mp4"  (dosyayı siteyle beraber yükle)
+   Boş bırakırsan poster tıklanınca satın alma bölümüne gider.
+------------------------------------------------------------------- */
+var VIDEO = "";
+
+(function () {
+  var box = document.getElementById('vsl');
+  if (!box) return;
+  box.querySelector('.vsl-play').addEventListener('click', function () {
+    if (!VIDEO) { document.getElementById('satinal').scrollIntoView({ behavior: 'smooth' }); return; }
+    var frame = document.createElement('div');
+    frame.className = 'vsl-frame';
+    if (VIDEO.indexOf('yt:') === 0) {
+      frame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + VIDEO.slice(3) +
+        '?autoplay=1&rel=0&modestbranding=1" title="EsnafKoçu tanıtım videosu" ' +
+        'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    } else if (VIDEO.indexOf('vimeo:') === 0) {
+      frame.innerHTML = '<iframe src="https://player.vimeo.com/video/' + VIDEO.slice(6) +
+        '?autoplay=1&title=0&byline=0" title="EsnafKoçu tanıtım videosu" ' +
+        'allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+    } else {
+      frame.innerHTML = '<video src="' + VIDEO + '" poster="img/vsl-poster.jpg" controls autoplay playsinline></video>';
+    }
+    box.replaceChildren(frame);
+  });
+})();
+</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"EsnafKoçu","applicationCategory":"BusinessApplication","operatingSystem":"macOS, Windows","description":"Google Haritalar'dan web sitesi olmayan yerel işletmeleri bulan ve firmanın kendi bilgisiyle beş sayfalık demo site üreten masaüstü yazılım.","offers":{"@type":"Offer","price":"1000","priceCurrency":"TRY","url":"https://www.shopier.com/50565225","availability":"https://schema.org/LimitedAvailability"}}
+</script>
+</body>
+</html>
